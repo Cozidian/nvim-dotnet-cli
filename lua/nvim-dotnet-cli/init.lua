@@ -18,10 +18,10 @@ function M.setup_key_mappings()
 	local map = vim.api.nvim_set_keymap
 	local opts = { noremap = true, silent = true }
 
-	map("n", "<leader>cta", ":RunAllTests", opts)
+	map("n", "<leader>cta", ":RunAllTests<CR>", opts)
 	map("n", "<leader>ctf", ":RunTestsWithFilter ", opts)
-	map("n", "<leader>ctm", ":RunTestUnderCursor", opts)
-	map("n", "<leader>ctc", ":RunTestsInClass", opts)
+	map("n", "<leader>ctm", ":RunTestUnderCursor<CR>", opts)
+	map("n", "<leader>ctc", ":RunTestsInClass<CR>", opts)
 end
 
 vim.api.nvim_create_user_command("RunAllTests", M.run_all_tests, { nargs = 0 })
