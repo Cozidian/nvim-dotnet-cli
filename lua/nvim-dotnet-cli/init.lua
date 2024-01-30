@@ -33,5 +33,10 @@ vim.api.nvim_create_user_command("RunTestUnderCursor", M.run_test_under_cursor, 
 vim.api.nvim_create_user_command("RunTestsInClass", M.run_tests_in_class, { nargs = 0 })
 
 -- Automatically set up the key mappings when the plugin is loaded
-M.setup_key_mappings()
+vim.api.nvim_create_autocmd("VimEnter", {
+	pattern = "*",
+	callback = function()
+		M.setup_key_mappings()
+	end,
+})
 return M
