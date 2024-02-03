@@ -5,6 +5,7 @@ local M = {}
 
 local function run_dotnet_command(cmd, success_message, fail_message)
 	local output_buf = output.create_output_buffer()
+	output.clear_buffer(output_buf)
 
 	local on_exit = function(job_id, exit_code, event_type)
 		local message = exit_code == 0 and success_message or fail_message

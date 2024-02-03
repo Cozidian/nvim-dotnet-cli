@@ -28,7 +28,6 @@ function M.append_data(buf, data)
 	end, data)
 
 	if next(data) ~= nil then
-		M.clear_buffer(buf)
 		vim.api.nvim_buf_set_lines(buf, -1, -1, false, data)
 	end
 end
