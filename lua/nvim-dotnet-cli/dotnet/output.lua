@@ -28,8 +28,17 @@ function M.append_data(buf, data)
 	end, data)
 
 	if next(data) ~= nil then
+		M.clear_buffer(buf)
 		vim.api.nvim_buf_set_lines(buf, -1, -1, false, data)
 	end
+end
+
+function M.clear_buffer(buf)
+	if not buf or buf < 1 then
+		error("Invalid buffer ID.")
+	end
+
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
 end
 
 return M
