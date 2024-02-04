@@ -5,9 +5,12 @@ local function ensure_treesitter_and_csharp_parser()
 		return false, "Tree-sitter is not available in this Neovim installation."
 	end
 
-	local parser_list = require("vim.treesitter.query").get("c_sharp", "highlights")
-	if #parser_list == 0 then
+	local status, result = pcall(require, "c_sharp", nil, true)
+	if not status then
+		print("Failed to load the C# Tree-sitter parser: ", result)
 		return false, "The C# Tree-sitter parser is not installed."
+	else
+		print("The C# Tree-sitter parser is successfully loaded.")
 	end
 
 	return true, ""
