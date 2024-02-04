@@ -42,7 +42,7 @@ end
 
 function M.run_test_for_current_method()
 	local class_name = utils.find_current_class_name()
-	local method_name = utils.find_current_method_name2()
+	local method_name = utils.find_current_method_name()
 
 	if not class_name then
 		return
