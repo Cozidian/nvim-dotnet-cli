@@ -1,20 +1,20 @@
 local M = {}
 
-local function ensure_treesitter_and_csharp_parser()
-	if not pcall(require, "vim.treesitter") then
-		return false, "Tree-sitter is not available in this Neovim installation."
-	end
-
-	local status, result = pcall(require, "c_sharp", nil, true)
-	if not status then
-		print("Failed to load the C# Tree-sitter parser: ", result)
-		return false, "The C# Tree-sitter parser is not installed."
-	else
-		print("The C# Tree-sitter parser is successfully loaded.")
-	end
-
-	return true, ""
-end
+-- local function ensure_treesitter_and_csharp_parser()
+-- 	if not pcall(require, "vim.treesitter") then
+-- 		return false, "Tree-sitter is not available in this Neovim installation."
+-- 	end
+--
+-- 	local status, result = pcall(require, "c_sharp", nil, true)
+-- 	if not status then
+-- 		print("Failed to load the C# Tree-sitter parser: ", result)
+-- 		return false, "The C# Tree-sitter parser is not installed."
+-- 	else
+-- 		print("The C# Tree-sitter parser is successfully loaded.")
+-- 	end
+--
+-- 	return true, ""
+-- end
 
 function M.find_current_method_name()
 	local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1
@@ -53,11 +53,11 @@ function M.find_current_class_name()
 end
 
 function M.find_current_method_name2()
-	local ok, err = ensure_treesitter_and_csharp_parser()
-	if not ok then
-		print(err)
-		return nil
-	end
+	-- local ok, err = ensure_treesitter_and_csharp_parser()
+	-- if not ok then
+	-- 	print(err)
+	-- 	return nil
+	-- end
 
 	local parser = vim.treesitter.get_parser(0, "c_sharp")
 	local tree = parser:parse()[1]
