@@ -1,25 +1,23 @@
 local M = {}
 
 M.output_win = nil
+M.output_buffer = nil
+
+function ResetBuffer()
+	vim.api.nvim_buf_delete(M.output_buffer, { force = true })
+	M.output_buffer = nil
+end
 
 function M.create_output_buffer()
-	if M.output_buf and vim.api.nvim_buf_is_valid(M.output_buf) then
-		if not M.output_win or not vim.api.nvim_win_is_valid(M.output_win) then
-			vim.api.nvim_command("vsplit")
-			M.output_win = vim.api.nvim_get_current_win()
-			vim.api.nvim_win_set_buf(M.output_win, M.output_buf)
-		end
-		return M.output_buf
+	if not M.output_buffer then
+		M.output_buffer = vim.api.nvim_create_buf(false, true)
+		vim.api.nvim_command("vsplit")
+		M.output_win = vim.api.nvim_get_current_win()
+		vim.api.nvim_win_set_buf(M.output_win, M.output_buffer)
 	end
+	vim.api.nvim_buf_set_keymap(M.output_buffer, "n", "q", ":lua ResetBuffer()<CR>", { noremap = true, silent = true })
 
-	M.output_buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_command("vsplit")
-	M.output_win = vim.api.nvim_get_current_win()
-	vim.api.nvim_win_set_buf(M.output_win, M.output_buf)
-
-	vim.api.nvim_buf_set_keymap(M.output_buf, "n", "q", "<cmd>bd<CR>", { noremap = true, silent = true })
-
-	return M.output_buf
+	return M.output_buffer
 end
 
 function M.append_data(buf, data)
