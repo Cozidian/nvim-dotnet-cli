@@ -8,6 +8,32 @@ function ResetBuffer()
 	M.output_buffer = nil
 end
 
+function M.setup_highlighting(buf)
+	-- Highlight groups defined elsewhere or here
+	vim.cmd("highlight TestFail guifg=Red ctermfg=Red")
+	vim.cmd("highlight TestPass guifg=Green ctermfg=Green")
+
+	-- Get the entire buffer's content
+	local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+	-- TODO: this could be optimized i think! Dont like the for loop
+	for i, line in ipairs(lines) do
+		-- Adjust the line index for 0-based API
+		local line_index = i - 1
+
+		-- Highlight "Failed!"
+		-- if line:match("Failed!") then
+		-- 	vim.api.nvim_buf_add_highlight(buf, -1, "TestFail", line_index, 0, -1)
+		-- end
+		if line:match("Failed") then
+			vim.api.nvim_buf_add_highlight(buf, -1, "TestFail", line_index, 0, -1)
+		end
+		if line:match("Passed!") then
+			vim.api.nvim_buf_add_highlight(buf, -1, "TestPass", line_index, 0, -1)
+		end
+	end
+end
+
 function M.create_output_buffer()
 	if not M.output_buffer then
 		M.output_buffer = vim.api.nvim_create_buf(false, true)
@@ -31,6 +57,7 @@ function M.append_data(buf, data)
 	if next(data) ~= nil then
 		vim.api.nvim_buf_set_lines(buf, -1, -1, false, data)
 	end
+	M.setup_highlighting(M.output_buffer)
 end
 
 function M.clear_buffer(buf)
