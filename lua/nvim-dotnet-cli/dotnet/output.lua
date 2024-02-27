@@ -16,6 +16,9 @@ function M.create_output_buffer()
 	vim.api.nvim_command("vsplit")
 	M.output_win = vim.api.nvim_get_current_win()
 	vim.api.nvim_win_set_buf(M.output_win, M.output_buf)
+
+	vim.api.nvim_buf_set_keymap(M.output_buf, "n", "q", "<cmd>bd<CR>", { noremap = true, silent = true })
+
 	return M.output_buf
 end
 
