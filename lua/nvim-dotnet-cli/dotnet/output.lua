@@ -21,10 +21,6 @@ function M.setup_highlighting(buf)
 		-- Adjust the line index for 0-based API
 		local line_index = i - 1
 
-		-- Highlight "Failed!"
-		-- if line:match("Failed!") then
-		-- 	vim.api.nvim_buf_add_highlight(buf, -1, "TestFail", line_index, 0, -1)
-		-- end
 		if line:match("Failed") then
 			vim.api.nvim_buf_add_highlight(buf, -1, "TestFail", line_index, 0, -1)
 		end
